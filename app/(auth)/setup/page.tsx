@@ -7,7 +7,7 @@ import { adminSetup } from '../actions';
 import { fetchAppSettings } from '@/app/admin/system/actions';
 import { Form, Input, Button, Alert } from 'antd';
 import logo from "@/app/images/logo.png";
-import Hivechat from "@/app/images/hivechat.svg";
+import Hivechat from "@/app/images/zhichat.svg";
 import { useTranslations } from 'next-intl';
 
 interface SetupFormValues {

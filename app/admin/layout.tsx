@@ -35,8 +35,8 @@ export default function RootLayout({
       <div className="flex flex-col w-64 bg-gray-100 min-h-screen h-screen p-4 box-border">
         <div className="flex items-center flex-row flex-grow-0 mb-2 h-10 mr-4">
           <Link href="/" className='flex items-center'>
-            <Image src={logo} className="ml-1" alt="HiveChat logo" width={24} height={24} />
-            <span className='text-xl ml-2'>Hivechat Admin</span>
+            <Image src={logo} className="ml-1" alt="Zhichat logo" width={24} height={24} />
+            <span className='text-xl ml-2'>Zhichat Admin</span>
           </Link>
         </div>
         <hr className='mb-4' />

@@ -6,7 +6,7 @@ import { SettingOutlined, ControlOutlined, UserOutlined } from '@ant-design/icon
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import logo from "@/app/images/logo.png";
-import HivechatText from "@/app/images/hivechat.svg";
+import HivechatText from "@/app/images/zhichat.svg";
 import ToggleSidebar from "@/app/images/hideSidebar.svg";
 import { Button } from 'antd';
 import ChatList from '@/app/components/ChatList';

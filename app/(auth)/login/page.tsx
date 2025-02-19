@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from 'next/link';
 import { Form, Input, Button, Alert } from 'antd';
 import logo from "@/app/images/logo.png";
-import Hivechat from "@/app/images/hivechat.svg";
+import Hivechat from "@/app/images/zhichat.svg";
 import { useTranslations } from 'next-intl';
 
 interface LoginFormValues {

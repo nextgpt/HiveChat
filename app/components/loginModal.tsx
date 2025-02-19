@@ -6,7 +6,7 @@ import { useLoginModal } from '@/app/contexts/loginModalContext';
 import { signIn } from "next-auth/react";
 import { fetchAppSettings } from '@/app/admin/system/actions';
 import logo from "@/app/images/logo.png";
-import Hivechat from "@/app/images/hivechat.svg";
+import Hivechat from "@/app/images/zhichat.svg";
 import Link from 'next/link';
 import Image from "next/image";
 import { useTranslations } from 'next-intl';
