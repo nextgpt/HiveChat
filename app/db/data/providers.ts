@@ -140,7 +140,7 @@ export const vllmProvider: LLMProvider = {
   id: 'vllm',
   providerName: 'VLLM',
   apiStyle: 'openai',
-  logo: '/images/vllm.png',
+  logo: '/images/providers/vllm.svg',
   order: 11
 }
 
