@@ -18,11 +18,15 @@ const CheckApiModal: React.FC<CustomModelModalProps> = ({
   const [customModelForm] = Form.useForm();
   const { modelList } = useModelListStore();
 
-
   const onModelFormSubmit = async (values: {
     modelId: string;
   }) => {
-    startCheck(values.modelId);
+    if (!values.modelId) {
+      // 如果没有选择模型，直接测试连接
+      startCheck('');
+    } else {
+      startCheck(values.modelId);
+    }
     setIsCheckApiModalOpenOpen(false);
   };
 
@@ -45,7 +49,7 @@ const CheckApiModal: React.FC<CustomModelModalProps> = ({
           form={customModelForm}
           onFinish={onModelFormSubmit}
           initialValues={{
-            modelId: modelList[0].id
+            modelId: modelList.length > 0 ? modelList[0].id : ''
           }}
         >
           <Form.Item
@@ -54,13 +58,12 @@ const CheckApiModal: React.FC<CustomModelModalProps> = ({
           >
             <Select
               options={
-                modelList.map(i => {
-                  return { value: i.id, label: i.displayName }
-                })
+                modelList.length > 0 
+                  ? modelList.map(i => ({ value: i.id, label: i.displayName }))
+                  : [{ value: '', label: t('noModelsAvailable') }]
               }
             />
           </Form.Item>
-
         </Form>
       </div>
     </Modal>

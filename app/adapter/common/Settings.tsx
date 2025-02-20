@@ -44,7 +44,6 @@ const Settings = (props: { providerId: string }) => {
 
 
   const getHelpLinks = (providerId: string) => {
-
     const helpLinks = {
       'openai': 'https://k2swpw8zgf.feishu.cn/wiki/J3FtwGumMi7k0vktB41cHvjTnTg',
       'claude': 'https://k2swpw8zgf.feishu.cn/wiki/XrMdwQlRKiOESdkdexMcQ89vn2e',
@@ -56,6 +55,7 @@ const Settings = (props: { providerId: string }) => {
       'qianfan': 'https://k2swpw8zgf.feishu.cn/wiki/PUKvw62CgiZLoCkR9xjcWktinrc',
       'siliconflow': 'https://k2swpw8zgf.feishu.cn/wiki/EpD4wAj0ai681hkFFqMcvQZUn8g',
       'ollama': 'https://k2swpw8zgf.feishu.cn/wiki/MiPKw3uI7iS7ImkdAG7cRj77nuf',
+      'vllm': 'https://k2swpw8zgf.feishu.cn/wiki/vllm-guide',
     };
     const providers = Object.keys(helpLinks);
     if (providers.includes(providerId)) {
@@ -126,7 +126,7 @@ const Settings = (props: { providerId: string }) => {
         >
           <div className='flex flex-row justify-between my-4 items-center'>
             <div className='flex items-center'>
-              <Image src={provider.providerLogo!} alt="" width={26} height={26} />
+              <Image src={provider.providerLogo || ''} alt="" width={26} height={26} />
               <h2 className='font-medium text-lg ml-2'>{provider.providerName}</h2>
             </div>
             <Form.Item name='status' style={{ 'margin': '0' }}>
@@ -157,7 +157,7 @@ const Settings = (props: { providerId: string }) => {
             </Link>
           </div>
           {
-            props.providerId === 'ollama' ?
+            props.providerId === 'ollama' || props.providerId === 'vllm' ?
               <Form.Item label={<span className='font-medium'>{t('serviceEndpoint')}</span>} name='endpoint'>
                 <Input
                   type='url'

@@ -1,4 +1,6 @@
 import { llmSettingsType } from '@/app/db/schema';
+import { LLMProvider } from '@/app/adapter/interface';
+
 const providers: llmSettingsType[] = [
   {
     provider: 'openai',
@@ -120,6 +122,26 @@ const providers: llmSettingsType[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+  {
+    provider: 'vllm',
+    providerName: 'VLLM',
+    apikey: null,
+    endpoint: null,
+    isActive: null,
+    apiStyle: 'openai',
+    logo: '/images/providers/vllm.svg',
+    order: 11,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 ]
+
+export const vllmProvider: LLMProvider = {
+  id: 'vllm',
+  providerName: 'VLLM',
+  apiStyle: 'openai',
+  logo: '/images/vllm.png',
+  order: 11
+}
 
 export default providers;

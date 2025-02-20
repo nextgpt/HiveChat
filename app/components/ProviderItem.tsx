@@ -7,6 +7,7 @@ const ProviderItem = (props: {
   data: {
     id: string;
     providerName: string;
+    providerLogo?: string;
     status?: boolean;
   }
 }) => {
@@ -15,9 +16,9 @@ const ProviderItem = (props: {
     <div className={`flex flex-row items-center h-12 px-2 justify-between hover:bg-gray-200 cursor-pointer rounded-md ${props.className || ''}`}>
       <div className='flex flex-row items-center'>
         <Avatar
-              style={{ border:'1px solid #ddd', padding: '0.2rem' }}
-              src={allProviderListByKey && allProviderListByKey[props.data.id]?.providerLogo || ''}
-            />
+          style={{ border:'1px solid #ddd', padding: '0.2rem' }}
+          src={props.data.providerLogo || ''}
+        />
         <span className='ml-2'>{props.data?.providerName}</span>
       </div>
       {
@@ -26,7 +27,6 @@ const ProviderItem = (props: {
           :
           <div className='w-2 h-2 bg-gray-400 rounded m-2'></div>
       }
-
     </div>
   )
 }

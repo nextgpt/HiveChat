@@ -60,6 +60,7 @@ export default function LLMLayout({
                       id: i.id,
                       providerName: i.providerName,
                       status: i.status,
+                      providerLogo: i.providerLogo,
                     }}
                   />
                 </Link>

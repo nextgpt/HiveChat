@@ -70,6 +70,14 @@ export interface LLMModelProvider {
   status?: boolean
 }
 
+export interface LLMProvider {
+  id: string;
+  providerName: string;
+  apiStyle?: 'openai' | 'claude' | 'gemini';
+  logo?: string;
+  order?: number;
+}
+
 export default interface TranslaterComponent {
   startTranslate: (question: string, language: string, completeCallback: (result: string) => void) => void;
   stopTranslate: () => void;
