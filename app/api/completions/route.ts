@@ -7,6 +7,12 @@ import proxyGeminiStream from './proxyGeminiStream';
 // Vercel Hobby 默认 10s，最大 60
 export const maxDuration = 60;
 
+// 确保URL包含协议前缀
+function ensureFullUrl(url: string | null | undefined): string {
+  if (!url) return '';
+  return url.startsWith('http') ? url : `http://${url}`;
+}
+
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session) {
@@ -43,10 +49,13 @@ export async function POST(req: NextRequest) {
       realEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${xModel}:streamGenerateContent?alt=sse&key=${realApikey}`;
     } else if (xEndpoint) {
       // 如有有自定义，优先用传过来的自定义，用户测试
-      realEndpoint = await completeEndpoint(xProvider as string, xEndpoint);
+      realEndpoint = await completeEndpoint(xProvider as string, ensureFullUrl(xEndpoint));
     } else {
-      realEndpoint = await completeEndpoint(xProvider as string, endpoint);
+      realEndpoint = await completeEndpoint(xProvider as string, ensureFullUrl(endpoint));
     }
+
+    // 确保最终的URL是完整的
+    realEndpoint = ensureFullUrl(realEndpoint);
 
     console.log('Debug - Final Config:', {
       realEndpoint,

@@ -66,9 +66,17 @@ export async function completeEndpoint(providerId: string, inputUrl?: string | n
     'siliconflow': 'https://api.siliconflow.cn/v1/chat/completions',
     'vllm': 'http://127.0.0.1:8000/v1/chat/completions',
   }
+
+  // 确保URL包含协议前缀
+  function ensureFullUrl(url: string): string {
+    if (!url) return '';
+    return url.startsWith('http') ? url : `http://${url}`;
+  }
+
   if (!inputUrl || inputUrl === 'null') {
     return endpointMap[providerId as keyof typeof endpointMap];
   }
+
   let apiUrl: string = ''
   if (providerId === 'claude') {
     if (inputUrl.endsWith('/v1/messages')) {
@@ -78,8 +86,9 @@ export async function completeEndpoint(providerId: string, inputUrl?: string | n
     } else {
       apiUrl = inputUrl + '/v1/messages';
     }
-    return apiUrl;
+    return ensureFullUrl(apiUrl);
   }
+
   if (inputUrl.endsWith('/v1/chat/completions')) {
     apiUrl = inputUrl;
   } else if (inputUrl.endsWith('/')) {
@@ -87,5 +96,5 @@ export async function completeEndpoint(providerId: string, inputUrl?: string | n
   } else {
     apiUrl = inputUrl + '/v1/chat/completions';
   }
-  return apiUrl;
+  return ensureFullUrl(apiUrl);
 }
