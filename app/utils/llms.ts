@@ -64,6 +64,7 @@ export async function completeEndpoint(providerId: string, inputUrl?: string | n
     'qwen': 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
     'qianfan': 'https://qianfan.baidubce.com/v2/chat/completions',
     'siliconflow': 'https://api.siliconflow.cn/v1/chat/completions',
+    'vllm': 'http://127.0.0.1:8000/v1/chat/completions',
   }
   if (!inputUrl || inputUrl === 'null') {
     return endpointMap[providerId as keyof typeof endpointMap];

@@ -23,7 +23,19 @@ export async function POST(req: NextRequest) {
     const xEndpoint = userRequestHeaders.get('X-Endpoint'); //选填，测试 URL 时需要
     const xModel = userRequestHeaders.get('X-Model');       //选填，gemini 这种特殊的才有
 
+    console.log('Debug - Headers:', {
+      xProvider,
+      xChatId,
+      xEndpoint,
+      xModel
+    });
+
     const { endpoint, apikey } = await getLlmConfigByProvider(xProvider || 'openai');
+    console.log('Debug - Provider Config:', {
+      endpoint,
+      apikey: apikey ? '***' : null
+    });
+
     // 测试连接下，会传 X-apikey，优先使用
     const realApikey = userRequestHeaders.get('X-Apikey') || apikey;
     let realEndpoint = '';
@@ -35,6 +47,12 @@ export async function POST(req: NextRequest) {
     } else {
       realEndpoint = await completeEndpoint(xProvider as string, endpoint);
     }
+
+    console.log('Debug - Final Config:', {
+      realEndpoint,
+      provider: xProvider
+    });
+
     const headers = new Headers({
       'Content-Type': 'application/json',
       'Connection': 'keep-alive',
@@ -43,25 +61,30 @@ export async function POST(req: NextRequest) {
     if (xProvider !== 'gemini') {
       headers.set('Authorization', `Bearer ${realApikey}`);
     }
-    // Claude 特殊，用 x-apikey
+    // Claude 特殊，用 x-api-key
     if (xProvider === 'claude') {
       headers.set('x-api-key', realApikey || '');
     }
     // 获取请求体
     const body = await req.text();
+    console.log('Debug - Request Body:', body);
+
     const response = await fetch(realEndpoint, {
       method: 'POST',
       headers: headers,
       body: body,
     });
+
     // 检查响应是否成功
     if (!response.ok) {
       const errorData = await response.json();
+      console.error('Debug - Error Response:', errorData);
       return new Response(JSON.stringify(errorData), {
         status: response.status,
         headers: { 'Content-Type': 'application/json' },
       });
     }
+
     const parsedBody = JSON.parse(body);
     switch (xProvider) {
       case 'claude':
@@ -83,9 +106,9 @@ export async function POST(req: NextRequest) {
           providerId: xProvider!
         });
     }
-
-  } catch (error) {
-    return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+  } catch (error: any) {
+    console.error('Debug - Caught Error:', error);
+    return new Response(JSON.stringify({ error: 'Internal Server Error', details: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
